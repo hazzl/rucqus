@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>IButton.qml</file>
+        <file>SQListView.qml</file>
+        <file>globals.js</file>
+        <file>icons/Album.png</file>
+        <file>icons/Artist.png</file>
+        <file>icons/Genre.png</file>
+        <file>icons/Pause.png</file>
+        <file>icons/Play.png</file>
+    </qresource>
+</RCC>
