@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDateTime>
+#include <QDebug>
 #include "rucqusplayer.h"
 #include "rucqusapp.h"
 #include "plistmodel.h"
@@ -109,24 +110,35 @@ void RucqusPlayer::recordTimesplayed(const int uid)
 
 void RucqusPlayer::onStateChanged(const QMediaPlayer::State state)
 {
+	qDebug() << state;
+	if (!errorString().isEmpty())
+		qDebug() << errorString().toLatin1().constData();
 	switch (state) {
 	case QMediaPlayer::StoppedState:
-		if (error()==QMediaPlayer::FormatError)
-		{
-			p_plist->previous();
+		if (error()==QMediaPlayer::FormatError) {
 			play();
+			qDebug("===============");
 		}
 		break;
 	case QMediaPlayer::PlayingState:
 		recordLastplayed(getUid(p_plist->currentIndex()));
+		break;
+	case QMediaPlayer::PausedState:
 		break;
 	}
 }
 
 void RucqusPlayer::onError(const QMediaPlayer::Error err)
 {
-	static int counter;	
-	if (err == QMediaPlayer::FormatError)
-		if (++counter<6)
-			p_plist->previous();
+	static quint8 counter = 0;
+	qDebug() << err;
+	if ((err == QMediaPlayer::FormatError) 
+		&& (p_plist->previousIndex() >= 0)
+		&& (++counter < 6)) 
+	{
+		qDebug("setting index %d",  p_plist->previousIndex());
+		p_plist->previous();
+
+	}
+	qDebug("counter %d", counter);
 }
