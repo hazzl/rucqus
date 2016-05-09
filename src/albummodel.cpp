@@ -16,7 +16,7 @@ void AlbumModel::refresh()
 	int artist = getCurrentIndex(app->artistList(), app->artistModel());
 
 	if (q->isActive()) q->finish();
-	QString query = QStringLiteral("SELECT DISTINCT al.id,al.name,c.name AS cat FROM "
+    QString query = QStringLiteral("SELECT DISTINCT al.id,al.name,c.name AS category FROM "
 				       "song_artists sa INNER JOIN songs s ON sa.song_id = s.id "
 				       "INNER JOIN song_genres g ON g.song_id = s.id "
 				       "INNER JOIN albums al ON al.id = s.album "
@@ -37,7 +37,7 @@ void AlbumModel::refresh()
 		query.append(" WHERE ");
 		query.append(where);
 	}
-	query.append(" ORDER BY cat DESC, al.name;");
+    query.append(" ORDER BY c.id DESC, al.name;");
 
 	q->prepare(query);
 	if (genre >= 0) q->bindValue(":gid", genre);
