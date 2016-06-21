@@ -1,8 +1,7 @@
 #include "sqlquerymodel.h"
 #include "rucqusapp.h"
 #include <QSqlRecord>
-#include <QSqlField>
-#include <QVariant>
+#include <QModelIndex>
 
 SqlQueryModel::SqlQueryModel(QObject *parent) :
     QSqlQueryModel(parent)
@@ -32,21 +31,20 @@ void SqlQueryModel::generateRoleNames()
 {
     m_roleNames.clear();
     for( int i = 0; i < record().count(); ++i) {
-	m_roleNames.insert(Qt::UserRole + i, record().fieldName(i).toUtf8());
+		m_roleNames.insert(Qt::UserRole + i, record().fieldName(i).toUtf8());
     }
 }
 
-QVariant SqlQueryModel::data(const QModelIndex &index, int role) const
+QVariant SqlQueryModel::data(const QModelIndex &searchIndex, int role) const
 {
     QVariant value;
 
     if(role < Qt::UserRole) {
-	value = QSqlQueryModel::data(index, role);
+		value = QSqlQueryModel::data(searchIndex, role);
     }
     else {
-	int columnIdx = role - Qt::UserRole;
-	QModelIndex modelIndex = this->index(index.row(), columnIdx);
-	value = QSqlQueryModel::data(modelIndex);
+		int column = role - Qt::UserRole;
+		value = QSqlQueryModel::data(this->index(searchIndex.row(), column));
     }
     return value;
 }
@@ -60,10 +58,10 @@ int SqlQueryModel::getCurrentIndex(const QQuickItem *list, const SqlQueryModel *
 		if (row >= 0)
 		{
 			/* we want get the uid of the element in the row pointed to by "currentIndex"
-			 * as the uid is always stored in column (first column in the SELECT statement)
+			 * as the uid is always stored in column Qt::UserRole (first column in the SELECT statement)
 			 * we can skip looking up the column number by name in m_roleNames
 			 */
-			QModelIndex modelIndex = this->index(row, 0);
+			QModelIndex modelIndex = this->createIndex(row, 0);
 			ret = model->data(modelIndex, Qt::UserRole).toInt();
 		}
 	}

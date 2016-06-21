@@ -34,7 +34,7 @@ void RucqusPlayer::replacePList()
 	{
 		/* there is always only one column in the SqlQueryModel
 		 * columns are implemented as roles for access by QML
-         */
+		 */
 		i = model->index(row,0);
 		path = model->data(i, Qt::UserRole+2).toString();
 		p_plist->addMedia(QMediaContent(QUrl::fromLocalFile(path)));
@@ -50,7 +50,6 @@ void RucqusPlayer::onMediaChanged()
 {
 	const int pListIndex = p_plist->currentIndex();
 	const int lViewIndex = dynamic_cast<RucqusApp*>(parent())->playList()->property("currentIndex").toInt();
-    qDebug("newIndex: %d", lViewIndex);
 	if ( (getUid(lViewIndex) == lastSong)
 			&& (pListIndex == lViewIndex + 1))
 	{
