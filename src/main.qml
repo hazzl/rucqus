@@ -163,6 +163,10 @@ Window {
 		    target: song
 		    onCurrentIndexChanged: if (playList.currentIndex != index) playList.currentIndex = index
 	    }
+	    Connections {
+		    target: plistModel
+		    onNewData: playList.currentIndex=0
+	    }
 	    model: plistModel
 	    y: albumButton.y + albumButton.height + Global.smallSize
 	    height: playbutton.y - y - 3
