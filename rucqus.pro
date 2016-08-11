@@ -15,7 +15,7 @@ SOURCES += src/main.cpp \
 
 RESOURCES += src/qml.qrc
 
-QMAKE_CXXFLAGS += -march=native -mtune=native
+QMAKE_CXXFLAGS = -march=native -mtune=native -O2
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

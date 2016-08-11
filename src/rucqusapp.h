@@ -34,7 +34,6 @@ private:
 	QSqlDatabase	p_db;
 	RucqusPlayer	*song;
 	QQuickItem	*p_genreLView, *p_artistLView, *p_albumLView, *p_playLView;
-	//QQuickItem	*why_do_i_need_this;
 	GenreModel	*p_genreModel;
 	ArtistModel	*p_artistModel;
 	AlbumModel	*p_albumModel;
