@@ -99,10 +99,10 @@ Window {
 	    Image {
 		id: cover
 		objectName: "cover"
-		x: genreButton.x
-		y: genreButton.y + genreButton.height + 36
-		height: 256
-		width: 256
+		x: genreButton.x+48
+		y: genreButton.y + genreButton.height + 32
+		height: 206
+		width: 206
 		opacity: 1
 		fillMode: Image.PreserveAspectFit
 		states: State {
