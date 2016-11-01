@@ -9,5 +9,6 @@
         <file>icons/Genre.png</file>
         <file>icons/Pause.png</file>
         <file>icons/Play.png</file>
+        <file>RLabel.qml</file>
     </qresource>
 </RCC>

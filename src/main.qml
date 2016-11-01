@@ -27,6 +27,10 @@ Window {
 		iconSource: "../icons/Genre.png"
 		onClicked: genreLView.toggle()
 	    }
+	    RLabel {
+		id: genreLabel
+		reference: genreButton
+	    }
 	    IButton {
 		id: artistButton
 		text: "Artist"
@@ -35,6 +39,10 @@ Window {
 		iconSource: "../icons/Artist.png"
 		onClicked: artistLView.toggle()
 	    }
+	    RLabel {
+		    id:artistLabel
+		    reference: artistButton
+	    }
 	    IButton {
 		id: albumButton
 		text: "Album"
@@ -42,6 +50,10 @@ Window {
 		anchors.right: parent.right
 		iconSource: "../icons/Album.png"
 		onClicked: albumLView.toggle()
+	    }
+	    RLabel {
+		    id: albumLabel
+		    reference: albumButton
 	    }
 	    SQListView {
 		id: genreLView
@@ -99,10 +111,11 @@ Window {
 	    Image {
 		id: cover
 		objectName: "cover"
-		x: genreButton.x+48
-		y: genreButton.y + genreButton.height + 32
-		height: 206
-		width: 206
+		anchors.top: genreLabel.bottom
+		anchors.topMargin: 4
+		x: parent.width / 4 - width / 2
+		height: 256
+		width: 256
 		opacity: 1
 		fillMode: Image.PreserveAspectFit
 		states: State {
@@ -124,32 +137,18 @@ Window {
 			easing.type: Easing.InOutQuad
 		    }
 		}
-		Text {
-		    id: artistName
-		    anchors.bottom: cover.status == Image.Ready ? parent.top : albumTitle.top
-		    anchors.bottomMargin: 3
-		    anchors.horizontalCenter: parent.horizontalCenter
-		    font.pixelSize: Global.normalSize
-		    font.bold: true
-		    color: Global.textColor
-		}
-		Text {
-		    id: albumTitle
-		    anchors.top: parent.bottom
-		    anchors.topMargin: 3
-		    anchors.horizontalCenter: parent.horizontalCenter
-		    font.pixelSize: Global.normalSize
-		    color: Global.textColor
-		}
 		Connections {
 		    target: song
 		    onMetaDataChanged: {
 			switch (key) {
+			case "Genre":
+				genreLabel.text = value
+				break
 			case "AlbumTitle":
-			    albumTitle.text = value
+			    albumLabel.text = value
 			    break
 			case "ContributingArtist":
-			    artistName.text = value
+			    artistLabel.text = value
 			    break
 			case "CoverArtUrlLarge":
 			    cover.source = value
@@ -176,7 +175,7 @@ Window {
 		    onNewData: playList.currentIndex = 0
 		}
 		model: plistModel
-		y: albumButton.y + albumButton.height + Global.smallSize
+		anchors.top: genreLabel.bottom
 		height: playbutton.y - y - 3
 		anchors.right: parent.right
 		width: parent.width / 2
@@ -216,7 +215,7 @@ Window {
 	    anchors.bottomMargin: 5
 	    anchors.left: parent.left
 	    anchors.leftMargin: 8
-	    width: 65
+	    width: 52
 	    iconSource: song.state
 			=== Global.PlayingState ? "../icons/Pause.png" : "../icons/Play.png"
 	    onClicked: song.state === Global.PlayingState ? song.pause(
@@ -225,7 +224,7 @@ Window {
 	Slider {
 	    id: slider
 	    objectName: "slider"
-	    width: parent.width - 200
+	    width: parent.width - 212
 	    height: Global.normalSize
 	    anchors.verticalCenter: playbutton.verticalCenter
 	    anchors.left: playbutton.right
