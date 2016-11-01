@@ -14,11 +14,11 @@
    height="159.99699"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="Play.svg"
-   inkscape:export-filename="/home/hazzl/Projects/chirrup/qml/chirrup/icons/Play.png"
-   inkscape:export-xdpi="17.970415"
-   inkscape:export-ydpi="17.970415">
+   inkscape:export-filename="/home/hazzl/Projects/rucqus/src/icons/Play.png"
+   inkscape:export-xdpi="25.873877"
+   inkscape:export-ydpi="25.873877">
   <defs
      id="defs4">
     <linearGradient
@@ -58,7 +58,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.9866542"
-     inkscape:cx="-25.992837"
+     inkscape:cx="-123.89614"
      inkscape:cy="49.476915"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -68,9 +68,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1366"
-     inkscape:window-height="744"
+     inkscape:window-height="713"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -80,7 +80,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

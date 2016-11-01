@@ -13,11 +13,11 @@
    height="693.79468"
    id="svg3135"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="Artist.svg"
-   inkscape:export-filename="/home/hazzl/Projects/chirrup/qml/chirrup/icons/Artist.png"
-   inkscape:export-xdpi="8.321414"
-   inkscape:export-ydpi="8.321414">
+   inkscape:export-filename="/home/hazzl/Projects/rucqus/src/icons/Artist.png"
+   inkscape:export-xdpi="6.2176642"
+   inkscape:export-ydpi="6.2176642">
   <defs
      id="defs3137" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-414.08854"
+     inkscape:cx="-1152.66"
      inkscape:cy="452.47921"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -38,9 +38,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1366"
-     inkscape:window-height="744"
+     inkscape:window-height="713"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:showpageshadow="true" />
   <g
@@ -341,7 +341,7 @@
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <cc:license
-           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
         <dc:publisher>
           <cc:Agent
              rdf:about="http://openclipart.org/">
