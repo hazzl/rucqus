@@ -16,8 +16,8 @@
    inkscape:version="0.91 r13725"
    sodipodi:docname="Artist.svg"
    inkscape:export-filename="/home/hazzl/Projects/rucqus/src/icons/Artist.png"
-   inkscape:export-xdpi="6.2176642"
-   inkscape:export-ydpi="6.2176642">
+   inkscape:export-xdpi="7.2539415"
+   inkscape:export-ydpi="7.2539415">
   <defs
      id="defs3137" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-1152.66"
+     inkscape:cx="-1891.2314"
      inkscape:cy="452.47921"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -372,7 +372,7 @@
         </dc:subject>
       </cc:Work>
       <cc:License
-         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
         <cc:permits
            rdf:resource="http://creativecommons.org/ns#Reproduction" />
         <cc:permits

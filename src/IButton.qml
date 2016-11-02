@@ -11,7 +11,7 @@ Rectangle {
     border.width: 1
     border.color: "#101010"
     radius: 4
-    height: 52
+    height: 58
     width: 150
     Image {
         id: aimg

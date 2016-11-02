@@ -40,8 +40,8 @@ Window {
 		onClicked: artistLView.toggle()
 	    }
 	    RLabel {
-		    id:artistLabel
-		    reference: artistButton
+		id: artistLabel
+		reference: artistButton
 	    }
 	    IButton {
 		id: albumButton
@@ -52,8 +52,8 @@ Window {
 		onClicked: albumLView.toggle()
 	    }
 	    RLabel {
-		    id: albumLabel
-		    reference: albumButton
+		id: albumLabel
+		reference: albumButton
 	    }
 	    SQListView {
 		id: genreLView
@@ -112,10 +112,10 @@ Window {
 		id: cover
 		objectName: "cover"
 		anchors.top: genreLabel.bottom
-		anchors.topMargin: 4
+		anchors.topMargin: 10
 		x: parent.width / 4 - width / 2
-		height: 256
-		width: 256
+		height: 240
+		width: 240
 		opacity: 1
 		fillMode: Image.PreserveAspectFit
 		states: State {
@@ -137,27 +137,42 @@ Window {
 			easing.type: Easing.InOutQuad
 		    }
 		}
-		Connections {
-		    target: song
-		    onMetaDataChanged: {
-			switch (key) {
-			case "Genre":
-				genreLabel.text = value
-				break
-			case "AlbumTitle":
-			    albumLabel.text = value
-			    break
-			case "ContributingArtist":
-			    artistLabel.text = value
-			    break
-			case "CoverArtUrlLarge":
-			    cover.source = value
-			}
+	    }
+	    Connections {
+		target: song
+		onMetaDataChanged: {
+		    switch (key) {
+		    case "Genre":
+			genreLabel.text = value
+			break
+		    case "AlbumTitle":
+			albumLabel.text = value
+			break
+		    case "ContributingArtist":
+			artistLabel.text = value
+			break
+		    case "CoverArtUrlLarge":
+			cover.source = value
 		    }
-		    onSourceChanged: {
-			var url = song.source.toString()
-			cover.source = url.substring(0, url.lastIndexOf(
-							 '/') + 1) + "album.jpg"
+		}
+		onSourceChanged: {
+		    var url = song.source.toString()
+		    cover.source = url.substring(0, url.lastIndexOf(
+						     '/') + 1) + "album.jpg"
+		}
+		onStateChanged: {
+		    switch (song.state) {
+		    case Global.PausedState:
+
+		    case Global.StoppedState:
+			genreLabel.hide()
+			artistLabel.hide()
+			albumLabel.hide()
+			break
+		    case Global.PlayingState:
+			genreLabel.show()
+			artistLabel.show()
+			albumLabel.show()
 		    }
 		}
 	    }
@@ -176,6 +191,7 @@ Window {
 		}
 		model: plistModel
 		anchors.top: genreLabel.bottom
+		anchors.topMargin: 10
 		height: playbutton.y - y - 3
 		anchors.right: parent.right
 		width: parent.width / 2
@@ -215,7 +231,7 @@ Window {
 	    anchors.bottomMargin: 5
 	    anchors.left: parent.left
 	    anchors.leftMargin: 8
-	    width: 52
+	    width: 58
 	    iconSource: song.state
 			=== Global.PlayingState ? "../icons/Pause.png" : "../icons/Play.png"
 	    onClicked: song.state === Global.PlayingState ? song.pause(
