@@ -163,16 +163,15 @@ Window {
 		onStateChanged: {
 		    switch (song.state) {
 		    case Global.PausedState:
-
 		    case Global.StoppedState:
-			genreLabel.hide()
-			artistLabel.hide()
-			albumLabel.hide()
+			genreLabel.opacity = 0.0
+			artistLabel.opacity = 0.0
+			albumLabel.opacity = 0.0
 			break
 		    case Global.PlayingState:
-			genreLabel.show()
-			artistLabel.show()
-			albumLabel.show()
+			genreLabel.opacity = 1.0
+			artistLabel.opacity = 1.0
+			albumLabel.opacity = 1.0
 		    }
 		}
 	    }
