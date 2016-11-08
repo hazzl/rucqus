@@ -13,7 +13,6 @@ Text {
     Behavior on opacity {
 	    OpacityAnimator{
 		    duration: 500
-		    easing.type: Easing.OutCubic
 	    }
     }
 }

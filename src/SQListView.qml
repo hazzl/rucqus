@@ -59,8 +59,8 @@ ListView {
 	    name: "showing"
 	    PropertyChanges {
 		target: sqlistView
-		x: genreButton.x
-		y: genreButton.y + genreButton.height + Global.smallSize
+		x: genreLabel.x
+		y: genreLabel.y + genreLabel.height
 		height: playbutton.y - y - 3
 		opacity: 1
 		enabled: true
