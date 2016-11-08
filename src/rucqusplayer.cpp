@@ -110,7 +110,6 @@ void RucqusPlayer::recordTimesplayed(const int uid)
 
 void RucqusPlayer::onStateChanged(const QMediaPlayer::State state)
 {
-	qDebug() << state;
 	if (!errorString().isEmpty())
 		qDebug() << errorString().toLatin1().constData();
 	switch (state) {
