@@ -38,27 +38,38 @@ RucqusApp::RucqusApp(int & argc, char ** argv)
 	p_plistModel = new PListModel(this);
 	context->setContextProperty("plistModel", p_plistModel);
 
-	connect(engine, &QQmlApplicationEngine::objectCreated, this, &RucqusApp::findViews);
+	connect(engine, &QQmlApplicationEngine::objectCreated, this, &RucqusApp::setupLoader);
 	connect(p_plistModel, &PListModel::newData, song, &RucqusPlayer::replacePList);
 
 	engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
 }
 
-void RucqusApp::findViews(QObject *object)
+void RucqusApp::setupLoader(QObject *object)
 {
-	p_genreLView = object->findChild<QQuickItem *>("genreLView");
-	p_artistLView = object->findChild<QQuickItem *>("artistLView");
-	p_albumLView = object->findChild<QQuickItem *>("albumLView");
-	p_playLView = object->findChild<QQuickItem *>("pListView");
+	p_loaderPage = object->findChild<QQuickItem *>("loaderPage");
+	connect(p_loaderPage, SIGNAL(loaded()), this, SLOT(findViews()));
+	if(p_loaderPage->property("source").toUrl() == QUrl())
+		p_loaderPage->setProperty("source",QUrl("qrc:/MusicPlayer.qml"));
+}
 
-	connect(p_genreLView, SIGNAL(currentIndexChanged()), p_artistModel, SLOT(refresh()));
-	connect(p_genreLView, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
-	connect(p_genreLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
-	connect(p_artistLView, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
-	connect(p_artistLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
-	connect(p_albumLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
-	connect(p_playLView, SIGNAL(clicked(int)), song->playlist(), SLOT(setCurrentIndex(int)));
-	song->replacePList();
+void RucqusApp::findViews()
+{
+	if (p_loaderPage->property("source").toUrl() == QUrl("qrc:/MusicPlayer.qml"))
+	{
+		p_genreLView = p_loaderPage->findChild<QQuickItem *>("genreLView");
+		p_artistLView = p_loaderPage->findChild<QQuickItem *>("artistLView");
+		p_albumLView = p_loaderPage->findChild<QQuickItem *>("albumLView");
+		p_playLView = p_loaderPage->findChild<QQuickItem *>("pListView");
+
+		connect(p_genreLView, SIGNAL(currentIndexChanged()), p_artistModel, SLOT(refresh()));
+		connect(p_genreLView, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
+		connect(p_genreLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
+		connect(p_artistLView, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
+		connect(p_artistLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
+		connect(p_albumLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
+		connect(p_playLView, SIGNAL(clicked(int)), song->playlist(), SLOT(setCurrentIndex(int)));
+		song->replacePList();
+	}
 }
 
 RucqusApp::~RucqusApp()

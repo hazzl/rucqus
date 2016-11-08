@@ -28,12 +28,13 @@ public:
 	const QQuickItem *playList() const {return p_playLView;}
 	const RucqusPlayer *player() const {return song;}
 	const ConfigHandler *conf() const {return p_conf;}
-public slots:
-	void findViews(QObject *object);
+private slots:
+	void setupLoader(QObject *object);
+	void findViews();
 private:
 	QSqlDatabase	p_db;
 	RucqusPlayer	*song;
-	QQuickItem	*p_genreLView, *p_artistLView, *p_albumLView, *p_playLView;
+	QQuickItem	*p_genreLView, *p_artistLView, *p_albumLView, *p_playLView, *p_loaderPage;
 	GenreModel	*p_genreModel;
 	ArtistModel	*p_artistModel;
 	AlbumModel	*p_albumModel;

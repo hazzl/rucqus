@@ -10,5 +10,11 @@
         <file>icons/Pause.png</file>
         <file>icons/Play.png</file>
         <file>RLabel.qml</file>
+        <file>Chooser.qml</file>
+        <file>MusicPlayer.qml</file>
+        <file>Prefs.qml</file>
+        <file>SLabel.qml</file>
+        <file>icons/Prefs.png</file>
+        <file>icons/Radio.png</file>
     </qresource>
 </RCC>
