@@ -26,7 +26,7 @@ void RucqusPlayer::replacePList()
 {
 	QModelIndex i;
 	QString path;
-	const PListModel *model = dynamic_cast<RucqusApp*>(parent())->plistModel();
+	const PListModel *model = dynamic_cast<const RucqusApp*>(parent())->plistModel();
 	int max_rows = std::min(model->rowCount(), 63);
 	p_plist->clear();
 
@@ -49,7 +49,8 @@ QUrl RucqusPlayer::source()
 void RucqusPlayer::onMediaChanged()
 {
 	const int pListIndex = p_plist->currentIndex();
-	const int lViewIndex = dynamic_cast<RucqusApp*>(parent())->playList()->property("currentIndex").toInt();
+	const QQuickItem *pv = dynamic_cast<RucqusApp*>(parent())->playListV();
+	const int lViewIndex = pv->property("currentIndex").toInt();
 	if ( (getUid(lViewIndex) == lastSong)
 			&& (pListIndex == lViewIndex + 1))
 	{
@@ -135,9 +136,6 @@ void RucqusPlayer::onError(const QMediaPlayer::Error err)
 		&& (p_plist->previousIndex() >= 0)
 		&& (++counter < 6)) 
 	{
-		qDebug("setting index %d",  p_plist->previousIndex());
 		p_plist->previous();
-
 	}
-	qDebug("counter %d", counter);
 }

@@ -19,13 +19,13 @@ public:
 	~RucqusApp();
 	const QSqlDatabase *db() const {return &p_db;}
 	const GenreModel *genreModel() const {return p_genreModel;}
-	const QQuickItem *genreList() const {return p_genreLView;}
+	const QQuickItem *genreList() const {return p_loaderPage->findChild<const QQuickItem*>("genreLView");}
 	const ArtistModel *artistModel() const {return p_artistModel;}
-	const QQuickItem *artistList() const {return p_artistLView;}
+	const QQuickItem *artistList() const {return p_loaderPage->findChild<const QQuickItem*>("artistLView");}
 	const AlbumModel *albumModel() const {return p_albumModel;}
-	const QQuickItem *albumList() const {return p_albumLView;}
+	const QQuickItem *albumList() const {return p_loaderPage->findChild<const QQuickItem*>("albumLView");}
 	const PListModel *plistModel() const {return p_plistModel;}
-	const QQuickItem *playList() const {return p_playLView;}
+	const QQuickItem *playListV() const {return p_loaderPage->findChild<const QQuickItem*>("pListView");}
 	const RucqusPlayer *player() const {return song;}
 	const ConfigHandler *conf() const {return p_conf;}
 private slots:
@@ -34,7 +34,8 @@ private slots:
 private:
 	QSqlDatabase	p_db;
 	RucqusPlayer	*song;
-	QQuickItem	*p_genreLView, *p_artistLView, *p_albumLView, *p_playLView, *p_loaderPage;
+	//QuickItem	*p_genreLView, *p_artistLView, *p_albumLView, *p_playLView;
+	QQuickItem	*p_loaderPage;
 	GenreModel	*p_genreModel;
 	ArtistModel	*p_artistModel;
 	AlbumModel	*p_albumModel;
