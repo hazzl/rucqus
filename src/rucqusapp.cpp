@@ -6,15 +6,16 @@
 #include <QUrl>
 #include <QQmlApplicationEngine>
 #include <QCursor>
+#include <QTimer>
 #include <QDebug>
 
 RucqusApp::RucqusApp(int & argc, char ** argv)
 	: QGuiApplication(argc, argv)
+	, p_genreLView{nullptr}
+	, p_artistLView{nullptr}
+	, p_albumLView{nullptr}
+	, p_playLView{nullptr}
 	, p_loaderPage{nullptr}
-//	, p_genreLView{nullptr}
-//	, p_artistLView{nullptr}
-//	, p_albumLView{nullptr}
-//	, p_playLView{nullptr}
 {
 	p_db = QSqlDatabase::addDatabase("QSQLITE");
 	p_db.setDatabaseName("rucqus.sqlite");
@@ -50,25 +51,35 @@ void RucqusApp::setupLoader(QObject *object)
 {
 	p_loaderPage = object->findChild<QQuickItem *>("loaderPage");
 	Q_CHECK_PTR(p_loaderPage);
-	connect(p_loaderPage, SIGNAL(loaded()), this, SLOT(findViews()));
+	connect(p_loaderPage, SIGNAL(loaded()), this, SLOT(initTimer()));
 	if(p_loaderPage->property("source").toUrl() == QUrl())
 		p_loaderPage->setProperty("source",QUrl("qrc:/MusicPlayer.qml"));
+}
+
+void RucqusApp::initTimer()
+{
+	// delay calling findViews until the end of this event loop
+	// otherwise we get old references when they should be overwritten
+	QTimer::singleShot(0, this, SLOT(findViews()));
 }
 
 void RucqusApp::findViews()
 {
 	if (p_loaderPage && p_loaderPage->property("source").toUrl() == QUrl("qrc:/MusicPlayer.qml"))
 	{
-			const QQuickItem *gv = genreList();
-			connect(gv, SIGNAL(currentIndexChanged()), p_artistModel, SLOT(refresh()));
-			connect(gv, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
-			connect(gv, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
-			const QQuickItem *arv = artistList();
-			connect(arv, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
-			connect(arv, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
-			connect(albumList(), SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
-			connect(playListV(), SIGNAL(clicked(int)), song->playlist(), SLOT(setCurrentIndex(int)));
-			song->replacePList();
+		p_genreLView = p_loaderPage->findChild<const QQuickItem*>("genreLView");
+		p_artistLView = p_loaderPage->findChild<const QQuickItem*>("artistLView");
+		p_albumLView = p_loaderPage->findChild<const QQuickItem*>("albumLView");
+		p_playLView = p_loaderPage->findChild<const QQuickItem*>("pListView");
+
+		connect(p_genreLView, SIGNAL(currentIndexChanged()), p_artistModel, SLOT(refresh()));
+		connect(p_genreLView, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
+		connect(p_genreLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
+		connect(p_artistLView, SIGNAL(currentIndexChanged()), p_albumModel, SLOT(refresh()));
+		connect(p_artistLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
+		connect(p_albumLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
+		connect(p_playLView, SIGNAL(clicked(int)), song->playlist(), SLOT(setCurrentIndex(int)));
+		song->replacePList();
 	}
 }
 
