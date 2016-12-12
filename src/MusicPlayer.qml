@@ -4,7 +4,7 @@ import "globals.js" as Global
 
 Item
 {
-    Rectangle {
+    Item {
 	width: parent.width - 16
 	anchors.horizontalCenter: parent.horizontalCenter
 	IButton {

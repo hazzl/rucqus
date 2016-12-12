@@ -20,6 +20,7 @@ Item {
 	    id: radioButton
 	    text: "Radio"
 	    iconSource: "../icons/Radio.png"
+	    onClicked: chooser.activated("Radio.qml")
 	}
 
 	IButton {

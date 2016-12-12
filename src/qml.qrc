@@ -16,5 +16,6 @@
         <file>SLabel.qml</file>
         <file>icons/Prefs.png</file>
         <file>icons/Radio.png</file>
+        <file>Radio.qml</file>
     </qresource>
 </RCC>
