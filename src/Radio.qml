@@ -11,10 +11,12 @@ Row {
     }
     ListView {
 	id: stationList
-	objectName: "stationList"
+	objectName: "stationListV"
 	signal clicked(int index)
 	clip: true
 	width: (parent.width - 5) / 2
+	height: parent.height
+	model: radioModel
 	preferredHighlightBegin: Global.normalSize * 4
 	preferredHighlightEnd: Global.normalSize * 11
 	highlightRangeMode: ListView.ApplyRange

@@ -11,7 +11,8 @@ SOURCES += src/main.cpp \
     src/genremodel.cpp \
     src/albummodel.cpp \
     src/plistmodel.cpp \
-    src/confighandler.cpp
+    src/confighandler.cpp \
+    src/radiomodel.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -31,4 +32,5 @@ HEADERS += \
     src/genremodel.h \
     src/albummodel.h \
     src/plistmodel.h \
-    src/confighandler.h
+    src/confighandler.h \
+    src/radiomodel.h

@@ -15,8 +15,8 @@ RucqusPlayer::RucqusPlayer(QObject *parent):
 {
 	Q_CHECK_PTR (parent);
 	p_plist = new QMediaPlaylist(this);
-	setPlaylist(p_plist);
 	lastSong = -1;
+	setAudioRole(QAudio::MusicRole);
 	connect (this, &RucqusPlayer::currentMediaChanged, this, &RucqusPlayer::onMediaChanged);
 	connect (this, &RucqusPlayer::stateChanged, this, &RucqusPlayer::onStateChanged);
 	connect (this ,static_cast<void(QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error), this, &RucqusPlayer::onError);
@@ -24,21 +24,31 @@ RucqusPlayer::RucqusPlayer(QObject *parent):
 
 void RucqusPlayer::replacePList()
 {
-	QModelIndex i;
-	QString path;
 	const PListModel *model = dynamic_cast<const RucqusApp*>(parent())->plistModel();
 	int max_rows = std::min(model->rowCount(), 63);
 	p_plist->clear();
 
+	/* there is always only one column in the SqlQueryModel
+	 * columns are implemented as roles for access by QML
+	 */
 	for (int row = 0; row < max_rows; ++row)
 	{
-		/* there is always only one column in the SqlQueryModel
-		 * columns are implemented as roles for access by QML
-		 */
-		i = model->index(row,0);
-		path = model->data(i, Qt::UserRole+2).toString();
+		QModelIndex i = model->index(row,0);
+		QString path = model->data(i, Qt::UserRole+2).toString();
 		p_plist->addMedia(QMediaContent(QUrl::fromLocalFile(path)));
 	}
+	setPlaylist(p_plist);
+}
+
+void RucqusPlayer::setRadioStation(int id)
+{
+	const RadioModel *model = dynamic_cast<const RucqusApp*>(parent())->radioModel();
+	p_plist->clear();
+	QModelIndex i = model->index(id, 0);
+	QUrl url(model->data(i, Qt::UserRole+2).toString());
+	QMediaContent station(url);
+	setMedia(station);
+	play();
 }
 
 QUrl RucqusPlayer::source()
@@ -50,6 +60,8 @@ void RucqusPlayer::onMediaChanged()
 {
 	const int pListIndex = p_plist->currentIndex();
 	const QQuickItem *pv = dynamic_cast<RucqusApp*>(parent())->playListV();
+	if (!pv)
+		return;
 	const int lViewIndex = pv->property("currentIndex").toInt();
 	if ( (getUid(lViewIndex) == lastSong)
 			&& (pListIndex == lViewIndex + 1))

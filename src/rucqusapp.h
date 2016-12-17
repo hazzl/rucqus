@@ -8,6 +8,7 @@
 #include "genremodel.h"
 #include "albummodel.h"
 #include "plistmodel.h"
+#include "radiomodel.h"
 #include "rucqusplayer.h"
 #include "confighandler.h"
 
@@ -25,6 +26,7 @@ public:
 	const AlbumModel *albumModel() const {return p_albumModel;}
 	const QQuickItem *albumList() const {return p_albumLView;}
 	const PListModel *plistModel() const {return p_plistModel;}
+	const RadioModel *radioModel() const {return p_radioModel;}
 	const QQuickItem *playListV() const {return p_playLView;}
 	const RucqusPlayer *player() const {return song;}
 	const ConfigHandler *conf() const {return p_conf;}
@@ -41,6 +43,7 @@ private:
 	ArtistModel	*p_artistModel;
 	AlbumModel	*p_albumModel;
 	PListModel	*p_plistModel;
+	RadioModel	*p_radioModel;
 	ConfigHandler	*p_conf;
 };
 #endif // RUCQUSAPP_H

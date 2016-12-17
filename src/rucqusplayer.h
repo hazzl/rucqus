@@ -17,6 +17,7 @@ signals:
 	void		currentIndexChanged(int index);
 public slots:
 	void		replacePList();
+	void		setRadioStation(int id);
 private:
 	QMediaPlaylist	*p_plist;
 	int		getUid(int index);

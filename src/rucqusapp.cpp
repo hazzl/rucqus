@@ -40,6 +40,8 @@ RucqusApp::RucqusApp(int & argc, char ** argv)
 	context->setContextProperty("albumModel", p_albumModel);
 	p_plistModel = new PListModel(this);
 	context->setContextProperty("plistModel", p_plistModel);
+	p_radioModel = new RadioModel(this);
+	context->setContextProperty("radioModel", p_radioModel);
 
 	connect(engine, &QQmlApplicationEngine::objectCreated, this, &RucqusApp::setupLoader);
 	connect(p_plistModel, &PListModel::newData, song, &RucqusPlayer::replacePList);
@@ -65,7 +67,10 @@ void RucqusApp::initTimer()
 
 void RucqusApp::findViews()
 {
-	if (p_loaderPage && p_loaderPage->property("source").toUrl() == QUrl("qrc:/MusicPlayer.qml"))
+	if (!p_loaderPage)
+		return;
+	QUrl source = p_loaderPage->property("source").toUrl();
+	if ( source == QUrl("qrc:/MusicPlayer.qml"))
 	{
 		p_genreLView = p_loaderPage->findChild<const QQuickItem*>("genreLView");
 		p_artistLView = p_loaderPage->findChild<const QQuickItem*>("artistLView");
@@ -79,7 +84,13 @@ void RucqusApp::findViews()
 		connect(p_artistLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
 		connect(p_albumLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
 		connect(p_playLView, SIGNAL(clicked(int)), song->playlist(), SLOT(setCurrentIndex(int)));
+		// clear current media in case it's set to a radio station
 		song->replacePList();
+	} else if ( source == QUrl("qrc:/Radio.qml"))
+	{
+		p_playLView = nullptr;
+		const QQuickItem *stationLView = p_loaderPage->findChild<const QQuickItem*>("stationListV");
+		connect(stationLView, SIGNAL(clicked(int)), song, SLOT(setRadioStation(int)));
 	}
 }
 
