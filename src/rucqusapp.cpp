@@ -84,7 +84,6 @@ void RucqusApp::findViews()
 		connect(p_artistLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
 		connect(p_albumLView, SIGNAL(currentIndexChanged()), p_plistModel, SLOT(refresh()));
 		connect(p_playLView, SIGNAL(clicked(int)), song->playlist(), SLOT(setCurrentIndex(int)));
-		// clear current media in case it's set to a radio station
 		song->replacePList();
 	} else if ( source == QUrl("qrc:/Radio.qml"))
 	{
