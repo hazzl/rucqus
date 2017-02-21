@@ -13,18 +13,24 @@ Item {
 			height: parent.height
 
 			Item {
+				id: stationImage
 				width: parent.width
 				height: parent.height/2
-
 				Image {
-					id: stationImage
 					anchors.centerIn: parent
-					visible: false
+					width: parent.width
+					fillMode: Image.PreserveAspectFit
+					smooth: true
+					source: "file:///home/hazzl/Schreibtisch/"+stationList.currentItem.delText+".png"
 				}
 			}
-
 			Text {
 				id: metadataText
+				text: "Test"
+				anchors.top: stationImage.bottom
+				anchors.topMargin: 10
+				color: Global.textColor
+				font.pixelSize: Global.normalSize
 			}
 		}
 
@@ -37,8 +43,8 @@ Item {
 			width: (parent.width - 5) / 2
 			height: parent.height
 			model: radioModel
-			preferredHighlightBegin: Global.normalSize * 4
-			preferredHighlightEnd: Global.normalSize * 11
+			preferredHighlightBegin: Global.bigSize * 4
+			preferredHighlightEnd: Global.bigSize * 11
 			highlightRangeMode: ListView.ApplyRange
 			highlightMoveDuration: 600
 			highlight: Rectangle {
@@ -46,7 +52,8 @@ Item {
 				opacity: .2
 			}
 			delegate: Text {
-				font.pixelSize: ListView.isCurrentItem ? Global.bigSize : Global.normalSize
+				property string delText: text
+				font.pixelSize: Global.bigSize
 				color: Global.textColor
 				text: name
 				MouseArea {
@@ -54,12 +61,6 @@ Item {
 					onClicked: {
 						stationList.currentIndex = index
 						stationList.clicked(index)
-					}
-				}
-				Behavior on font.pixelSize {
-					NumberAnimation {
-						easing.type: Easing.InOutQuart
-						duration: 200
 					}
 				}
 			}
