@@ -170,6 +170,7 @@ Item
 	    id: playList
 	    objectName: "pListView"
 	    signal clicked(int index)
+
 	    Connections {
 		target: song
 		onCurrentIndexChanged: if (playList.currentIndex != index)
@@ -179,6 +180,7 @@ Item
 		target: plistModel
 		onNewData: playList.currentIndex = 0
 	    }
+
 	    model: plistModel
 	    anchors.top: genreLabel.bottom
 	    anchors.topMargin: 10

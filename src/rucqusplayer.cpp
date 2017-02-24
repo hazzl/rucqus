@@ -15,6 +15,7 @@ RucqusPlayer::RucqusPlayer(QObject *parent):
 {
 	Q_CHECK_PTR (parent);
 	p_plist = new QMediaPlaylist(this);
+	setPlaylist(p_plist);
 	lastSong = -1;
 	setAudioRole(QAudio::MusicRole);
 	connect (this, &RucqusPlayer::currentMediaChanged, this, &RucqusPlayer::onMediaChanged);
@@ -37,7 +38,6 @@ void RucqusPlayer::replacePList()
 		QString path = model->data(i, Qt::UserRole+2).toString();
 		p_plist->addMedia(QMediaContent(QUrl::fromLocalFile(path)));
 	}
-	setPlaylist(p_plist);
 }
 
 void RucqusPlayer::setRadioStation(int id)
