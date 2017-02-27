@@ -17,7 +17,6 @@ Item {
 				width: parent.width
 				height: parent.height/2
 				Image {
-					anchors.centerIn: parent
 					width: parent.width
 					fillMode: Image.PreserveAspectFit
 					smooth: true
@@ -26,11 +25,18 @@ Item {
 			}
 			Text {
 				id: metadataText
-				text: "Test"
-				anchors.top: stationImage.bottom
-				anchors.topMargin: 10
 				color: Global.textColor
 				font.pixelSize: Global.normalSize
+				width: parent.width
+				wrapMode: Text.Wrap
+				clip: true
+				Connections {
+					target: song
+					onMetaDataChanged: {
+						// console.log(key,value)
+						if (key === "Title") { metadataText.text = value }
+					}
+				}
 			}
 		}
 
@@ -61,6 +67,7 @@ Item {
 					onClicked: {
 						stationList.currentIndex = index
 						stationList.clicked(index)
+						metadataText.text = ""
 					}
 				}
 			}
