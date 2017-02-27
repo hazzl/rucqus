@@ -12,17 +12,14 @@ Item {
 			width: parent.width/2
 			height: parent.height
 
-			Item {
-				id: stationImage
-				width: parent.width
-				height: parent.height/2
 				Image {
+					id: stationImage
 					width: parent.width
+					height: parent.height/2
 					fillMode: Image.PreserveAspectFit
 					smooth: true
 					source: "file:///home/hazzl/Schreibtisch/"+stationList.currentItem.delText+".png"
 				}
-			}
 			Text {
 				id: metadataText
 				color: Global.textColor
@@ -33,7 +30,7 @@ Item {
 				Connections {
 					target: song
 					onMetaDataChanged: {
-						// console.log(key,value)
+						console.log(key+":",value)
 						if (key === "Title") { metadataText.text = value }
 					}
 				}
