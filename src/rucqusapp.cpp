@@ -90,6 +90,7 @@ void RucqusApp::findViews()
 		p_playLView = nullptr;
 		const QQuickItem *stationLView = p_loaderPage->findChild<const QQuickItem*>("stationListV");
 		connect(stationLView, SIGNAL(clicked(int)), song, SLOT(setRadioStation(int)));
+		song->setRadioStation(0);
 	}
 }
 
