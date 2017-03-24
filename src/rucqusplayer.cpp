@@ -46,8 +46,7 @@ void RucqusPlayer::setRadioStation(int id)
 	p_plist->clear();
 	QModelIndex i = model->index(id, 0);
 	QUrl url(model->data(i, Qt::UserRole+2).toString());
-	QMediaContent station(url);
-	setMedia(station);
+	p_plist->addMedia(QMediaContent(url));
 	play();
 }
 
