@@ -9,7 +9,7 @@ ConfigHandler::ConfigHandler(QObject *parent) : QObject(parent)
 		p_config[q.value(0).toString()]=q.value(1);
 }
 
-void ConfigHandler::set(QString key, QVariant value)
+void ConfigHandler::set(const QString &key, const QVariant &value)
 {
 	p_config[key]=value;
 	QSqlQuery q("INSERT OR REPLACE INTO config VALUES (:key,:value);");

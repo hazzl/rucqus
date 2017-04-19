@@ -11,8 +11,8 @@ class ConfigHandler : public QObject
 	Q_OBJECT
 public:
 	explicit ConfigHandler(QObject *parent = 0);
-	const QVariant get(QString key) const {return p_config[key];}
-	void set(QString key, QVariant value);
+	const QVariant get(const QString &key) const {return p_config[key];}
+	void set(const QString &key, const QVariant &value);
 private:
 	QHash <QString, QVariant>p_config;
 };
