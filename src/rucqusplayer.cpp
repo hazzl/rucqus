@@ -86,7 +86,7 @@ int RucqusPlayer::getUid(int i)
 
 void RucqusPlayer::recordLastplayed(const int uid)
 {
-	const uint time = QDateTime::currentDateTime().toTime_t();
+	const uint time = QDateTime::currentDateTimeUtc().toTime_t();
 	QSqlQuery q;
 	q.prepare("UPDATE songs SET lastplayed=:time WHERE id=:uid;");
 	q.bindValue(":time",time);
