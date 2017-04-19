@@ -16,6 +16,8 @@ SOURCES += src/main.cpp \
 
 RESOURCES += src/qml.qrc
 
+DEFINES += QT_RESTRICTED_CAST_FROM_ASCII
+
 QMAKE_CXXFLAGS = -march=native -mtune=native -O2
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
