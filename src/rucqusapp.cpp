@@ -62,7 +62,7 @@ void RucqusApp::initTimer()
 {
 	// delay calling findViews until the end of this event loop
 	// otherwise we get old references when they should be overwritten
-	QTimer::singleShot(0, this, SLOT(findViews()));
+	QTimer::singleShot(0, this, &RucqusApp::findViews);
 }
 
 void RucqusApp::findViews()
