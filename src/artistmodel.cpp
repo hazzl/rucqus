@@ -20,11 +20,11 @@ void ArtistModel::refresh()
 	if (genre == -1)
 		query.append("artists a ");
 	else
-		query.append("song_genres g INNER JOIN songs s ON g.song_id = s.id "
+		query.append(QStringLiteral("song_genres g INNER JOIN songs s ON g.song_id = s.id "
 			     "INNER JOIN song_artists sa USING (song_id) "
 			     "INNER JOIN artists a ON a.id = sa.artist_id "
-			     "WHERE g.genre_id=:gid ");
-	query.append("ORDER BY upper(a.name);");
+				 "WHERE g.genre_id=:gid "));
+	query.append(QStringLiteral("ORDER BY upper(a.name);"));
 	q->prepare(query);
 	if (genre >= 0) q->bindValue(":gid", genre);
 	q->exec();

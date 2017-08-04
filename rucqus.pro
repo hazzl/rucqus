@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick multimedia sql
+QT += qml quick network multimedia sql
 CONFIG += c++11
 
 SOURCES += src/main.cpp \
@@ -12,7 +12,8 @@ SOURCES += src/main.cpp \
     src/albummodel.cpp \
     src/plistmodel.cpp \
     src/confighandler.cpp \
-    src/radiomodel.cpp
+    src/radiomodel.cpp \
+    src/downloader.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -35,4 +36,5 @@ HEADERS += \
     src/albummodel.h \
     src/plistmodel.h \
     src/confighandler.h \
-    src/radiomodel.h
+    src/radiomodel.h \
+    src/downloader.h

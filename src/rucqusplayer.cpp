@@ -4,6 +4,9 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDateTime>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QDebug>
 #include "rucqusplayer.h"
 #include "rucqusapp.h"
@@ -11,16 +14,18 @@
 
 RucqusPlayer::RucqusPlayer(QObject *parent):
 	QMediaPlayer(parent, QMediaPlayer::StreamPlayback)
-
 {
 	Q_CHECK_PTR (parent);
 	p_plist = new QMediaPlaylist(this);
+	down = new Downloader(this);
 	setPlaylist(p_plist);
 	lastSong = -1;
 	setAudioRole(QAudio::MusicRole);
 	connect (this, &RucqusPlayer::currentMediaChanged, this, &RucqusPlayer::onMediaChanged);
 	connect (this, &RucqusPlayer::stateChanged, this, &RucqusPlayer::onStateChanged);
 	connect (this ,static_cast<void(QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error), this, &RucqusPlayer::onError);
+	connect (down, &Downloader::downloaded, this, &RucqusPlayer::playRadio);
+	connect (p_plist, &QMediaPlaylist::loaded, this, &QMediaPlayer::play);
 }
 
 void RucqusPlayer::replacePList()
@@ -29,8 +34,8 @@ void RucqusPlayer::replacePList()
 	int max_rows = std::min(model->rowCount(), 63);
 	p_plist->clear();
 
-	/* there is always only one column in the SqlQueryModel
-	 * columns are implemented as roles for access by QML
+	/* there is always only one physical column in the SqlQueryModel
+	 * logical columns are implemented as roles for access by QML
 	 */
 	for (int row = 0; row < max_rows; ++row)
 	{
@@ -43,11 +48,18 @@ void RucqusPlayer::replacePList()
 void RucqusPlayer::setRadioStation(int id)
 {
 	const RadioModel *model = dynamic_cast<const RucqusApp*>(parent())->radioModel();
+	const QModelIndex i = model->index(id, 0);
+	const QUrl url(model->data(i, Qt::UserRole+2).toString());
+	if (url.scheme() == "http")
+		down->get(url);
+	else
+		playRadio(url);
+}
+
+void RucqusPlayer::playRadio(const QUrl &file)
+{
 	p_plist->clear();
-	QModelIndex i = model->index(id, 0);
-	QUrl url(model->data(i, Qt::UserRole+2).toString());
-	p_plist->addMedia(QMediaContent(url));
-	play();
+	p_plist->load(file);
 }
 
 QUrl RucqusPlayer::source()
@@ -88,18 +100,18 @@ void RucqusPlayer::recordLastplayed(const int uid)
 {
 	const uint time = QDateTime::currentDateTimeUtc().toTime_t();
 	QSqlQuery q;
-	q.prepare("UPDATE songs SET lastplayed=:time WHERE id=:uid;");
+	q.prepare(QStringLiteral("UPDATE songs SET lastplayed=:time WHERE id=:uid;"));
 	q.bindValue(":time",time);
 	q.bindValue(":uid",uid);
 	q.exec();
 	q.finish();
-	q.prepare("SELECT album FROM songs WHERE id=:uid;");
+	q.prepare(QStringLiteral("SELECT album FROM songs WHERE id=:uid;"));
 	q.bindValue(":uid",uid);
 	q.exec();
 	if(q.first())
 	{
 		const int album = q.value(0).toInt();
-		q.prepare("UPDATE albums SET lastplayed=:time WHERE id=:alb;");
+		q.prepare(QStringLiteral("UPDATE albums SET lastplayed=:time WHERE id=:alb;"));
 		q.bindValue(":time",time);
 		q.bindValue(":alb",album);
 		q.exec();
@@ -109,12 +121,12 @@ void RucqusPlayer::recordLastplayed(const int uid)
 void RucqusPlayer::recordTimesplayed(const int uid)
 {
 	QSqlQuery q;
-	q.prepare("SELECT timesplayed FROM songs WHERE id=:uid;");
+	q.prepare(QStringLiteral("SELECT timesplayed FROM songs WHERE id=:uid;"));
 	q.bindValue(":uid",uid);
 	q.exec();
 	q.first();
 	const int timesplayed = q.value(0).toInt()+1;
-	q.prepare("UPDATE songs SET timesplayed=:tp WHERE id=:uid;");
+	q.prepare(QStringLiteral("UPDATE songs SET timesplayed=:tp WHERE id=:uid;"));
 	q.bindValue(":tp", timesplayed);
 	q.bindValue(":uid", uid);
 	q.exec();
