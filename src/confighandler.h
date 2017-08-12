@@ -5,12 +5,14 @@
 #include <QHash>
 #include <QVariant>
 #include <QString>
+#include <QDir>
 
 class ConfigHandler : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY (float scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
 	Q_PROPERTY (bool hidePointer READ isPointerHidden WRITE hidePointer NOTIFY hidePointerChanged)
+	Q_PROPERTY (QString homePath READ homePath)
 public:
 	explicit ConfigHandler(QObject *parent = 0);
 	const QVariant get(const QString &key) const {return p_config[key];}
@@ -19,6 +21,7 @@ public:
 	bool isPointerHidden() const {return p_config["hidePointer"].toBool();}
 	void hidePointer(bool newState);
 	void set(const QString &key, const QVariant &value);
+	QString homePath() const {return QDir::homePath();}
 signals:
 	void configChanged(const QString &key, const QVariant &value);
 	void scaleFactorChanged();

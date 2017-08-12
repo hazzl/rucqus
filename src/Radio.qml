@@ -18,8 +18,7 @@ Item {
 		height: parent.height / 2
 		fillMode: Image.PreserveAspectFit
 		smooth: true
-		source: "file:///home/hazzl/Schreibtisch/"
-			+ stationList.currentItem.delText + ".png"
+		source: "file://" + config.homePath + "/" + stationList.currentItem.delText + ".png"
 	    }
 	    Text {
 		id: metadataText
