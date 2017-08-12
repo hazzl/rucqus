@@ -16,7 +16,8 @@ Item {
 	    text: "Hide Pointer"
 	}
 	CheckBox {
-	    checked: true
+	    checked: config.hidePointer
+	    onCheckStateChanged: config.hidePointer = checkState
 	}
 	SLabel {
 	    text: "Vert. Stretch"
@@ -24,12 +25,16 @@ Item {
 	SpinBox {
 	    id: spinbox
 	    from: 50
-	    value: 120
+	    value: config.scaleFactor * 100
 	    to: 200
 	    stepSize: 1
 
 	    property int decimals: 2
 	    property real realValue: value / 100
+
+	    onRealValueChanged: {
+		    config.scaleFactor = realValue
+	    }
 
 	    validator: DoubleValidator {
 		bottom: Math.min(spinbox.from, spinbox.to)

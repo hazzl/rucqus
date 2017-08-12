@@ -9,10 +9,10 @@ Window {
     Rectangle {
 	visible: true
 	width: 640
-	height: 400
+	height: 480 / config.scaleFactor
 	color: "black"
 	transform: Scale {
-	    yScale: 1.2
+	    yScale: config.scaleFactor
 	}
 	SwipeView {
 	    id: sview

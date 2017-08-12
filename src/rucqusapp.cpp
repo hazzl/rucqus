@@ -25,11 +25,14 @@ RucqusApp::RucqusApp(int & argc, char ** argv)
 		qCritical(err.driverText().toUtf8());
 		qFatal(err.databaseText().toUtf8());
 	}
-	p_conf = new ConfigHandler(this);
-	if (p_conf->get("hidePointer").toBool())
-		setOverrideCursor(QCursor(Qt::BlankCursor));
 	QQmlApplicationEngine *engine = new QQmlApplicationEngine(this);
 	QQmlContext *context = engine->rootContext();
+	p_conf = new ConfigHandler(this);
+	if (p_conf->isPointerHidden())
+		setOverrideCursor(QCursor(Qt::BlankCursor));
+	connect(p_conf, &ConfigHandler::hidePointerChanged, [=]{
+		setOverrideCursor(QCursor(p_conf->isPointerHidden()? Qt::BlankCursor : Qt::ArrowCursor));});
+	context->setContextProperty("config", p_conf);
 	song = new RucqusPlayer(this);
 	context->setContextProperty("song", song);
 	p_genreModel = new GenreModel(this);
