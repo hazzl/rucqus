@@ -30,10 +30,9 @@ Item {
 	    stepSize: 1
 
 	    property int decimals: 2
-	    property real realValue: value / 100
 
-	    onRealValueChanged: {
-		    config.scaleFactor = realValue
+	    onValueChanged: {
+		    config.scaleFactor = value / 100
 	    }
 
 	    validator: DoubleValidator {
