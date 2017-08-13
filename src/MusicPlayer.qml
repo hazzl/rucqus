@@ -101,11 +101,11 @@ Item
 	Image {
 	    id: cover
 	    objectName: "cover"
-	    anchors.top: genreLabel.bottom
-	    anchors.topMargin: 10
 	    x: parent.width / 4 - width / 2
-	    height: 240
-	    width: 240
+	    height: 230
+	    width: 230
+	    anchors.top: genreLabel.bottom
+	    anchors.topMargin: 10 + (viewPort.height - 30 - height - genreButton.height - genreLabel.height - playbutton.height)/2
 	    opacity: 1
 	    fillMode: Image.PreserveAspectFit
 	    states: State {
@@ -123,7 +123,7 @@ Item
 		NumberAnimation {
 		    target: cover
 		    properties: "x,opacity"
-		    duration: 300
+		    duration: 350
 		    easing.type: Easing.InOutQuad
 		}
 	    }

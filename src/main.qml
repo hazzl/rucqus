@@ -7,6 +7,7 @@ Window {
     width: 640
     height: 480
     Rectangle {
+	id: viewPort
 	visible: true
 	width: 640
 	height: 480 / config.scaleFactor
