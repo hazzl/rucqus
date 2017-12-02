@@ -10,7 +10,7 @@ class RucqusPlayer : public QMediaPlayer
 	Q_OBJECT
 	Q_PROPERTY(QUrl source READ source NOTIFY sourceChanged STORED false FINAL)
 public:
-	explicit	RucqusPlayer(QObject *parent = 0);
+	explicit	RucqusPlayer(QObject *parent = nullptr);
 	QUrl		source();
 signals:
 	void		sourceChanged();

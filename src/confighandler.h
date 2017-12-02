@@ -14,7 +14,7 @@ class ConfigHandler : public QObject
 	Q_PROPERTY (bool hidePointer READ isPointerHidden WRITE hidePointer NOTIFY hidePointerChanged)
 	Q_PROPERTY (QString homePath READ homePath)
 public:
-	explicit ConfigHandler(QObject *parent = 0);
+	explicit ConfigHandler(QObject *parent = nullptr);
 	const QVariant get(const QString &key) const {return p_config[key];}
 	float scaleFactor() const { return p_config[QStringLiteral("scaleFactor")].toFloat();}
 	void setScaleFactor(const float newScaleFactor);

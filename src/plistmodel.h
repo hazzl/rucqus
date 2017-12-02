@@ -7,7 +7,7 @@ class PListModel : public SqlQueryModel
 {
 	Q_OBJECT
 public:
-	PListModel(QObject *parent = 0);
+	PListModel(QObject *parent = nullptr);
 public slots:
 	virtual void refresh();
 signals:

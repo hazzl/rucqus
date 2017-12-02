@@ -7,7 +7,7 @@ class AlbumModel : public SqlQueryModel
 {
 	Q_OBJECT
 public:
-	AlbumModel(QObject *parent = 0);
+	AlbumModel(QObject *parent = nullptr);
 public slots:
 	virtual void refresh();
 };

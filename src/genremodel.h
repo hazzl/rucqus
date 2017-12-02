@@ -7,7 +7,7 @@ class GenreModel : public SqlQueryModel
 {
 	Q_OBJECT
 public:
-	GenreModel(QObject *parent = 0);
+	GenreModel(QObject *parent = nullptr);
 public slots:
 	virtual void refresh();
 };

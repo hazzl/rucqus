@@ -7,7 +7,7 @@ class RadioModel : public SqlQueryModel
 {
 	Q_OBJECT
 public:
-	RadioModel(QObject *parent = 0);
+	RadioModel(QObject *parent = nullptr);
 public slots:
 	virtual void refresh();
 };
