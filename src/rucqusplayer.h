@@ -1,6 +1,5 @@
 #ifndef RUCQUSPLAYER_H
 #define RUCQUSPLAYER_H
-#include "downloader.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QMediaContent>
@@ -21,13 +20,11 @@ public slots:
 	void		setRadioStation(int id);
 private:
 	QMediaPlaylist	*p_plist;
-	Downloader	*down;
 	int			getUid(int index);
 	int			lastSong;
 	void		recordLastplayed(const int uid);
 	void		recordTimesplayed(const int uid);
 private slots:
-	void		playRadio(const QUrl &file);
 	void		onMediaChanged();
 	void		onStateChanged(const QMediaPlayer::State state);
 	void		onError(const QMediaPlayer::Error err);

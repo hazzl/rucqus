@@ -17,14 +17,12 @@ RucqusPlayer::RucqusPlayer(QObject *parent):
 {
 	Q_CHECK_PTR (parent);
 	p_plist = new QMediaPlaylist(this);
-	down = new Downloader(this);
 	setPlaylist(p_plist);
 	lastSong = -1;
 	setAudioRole(QAudio::MusicRole);
 	connect (this, &RucqusPlayer::currentMediaChanged, this, &RucqusPlayer::onMediaChanged);
 	connect (this, &RucqusPlayer::stateChanged, this, &RucqusPlayer::onStateChanged);
 	connect (this ,static_cast<void(QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error), this, &RucqusPlayer::onError);
-	connect (down, &Downloader::downloaded, this, &RucqusPlayer::playRadio);
 	connect (p_plist, &QMediaPlaylist::loaded, this, &QMediaPlayer::play);
 }
 
@@ -50,16 +48,8 @@ void RucqusPlayer::setRadioStation(int id)
 	const RadioModel *model = dynamic_cast<const RucqusApp*>(parent())->radioModel();
 	const QModelIndex i = model->index(id, 0);
 	const QUrl url(model->data(i, Qt::UserRole+2).toString());
-	if (url.scheme() == "http")
-		down->get(url);
-	else
-		playRadio(url);
-}
-
-void RucqusPlayer::playRadio(const QUrl &file)
-{
 	p_plist->clear();
-	p_plist->load(file);
+	p_plist->load(url);
 }
 
 QUrl RucqusPlayer::source()

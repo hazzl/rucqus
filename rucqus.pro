@@ -12,8 +12,7 @@ SOURCES += src/main.cpp \
     src/albummodel.cpp \
     src/plistmodel.cpp \
     src/confighandler.cpp \
-    src/radiomodel.cpp \
-    src/downloader.cpp
+    src/radiomodel.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -36,5 +35,4 @@ HEADERS += \
     src/albummodel.h \
     src/plistmodel.h \
     src/confighandler.h \
-    src/radiomodel.h \
-    src/downloader.h
+    src/radiomodel.h
