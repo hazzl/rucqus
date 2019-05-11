@@ -24,6 +24,7 @@ Rectangle {
         id: label
         text: ""
         font.pixelSize: Global.normalSize
+	font.family: Global.fontFamily
         color: Global.textColor
         anchors.leftMargin: 5
         anchors.left: aimg.right

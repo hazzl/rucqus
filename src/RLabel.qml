@@ -6,6 +6,7 @@ Text {
 
     id: labeltext
     font.pixelSize: Global.smallSize
+    font.family: Global.fontFamily
     color: Global.textColor
     x: reference.x
     anchors.top: reference.bottom

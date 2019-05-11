@@ -79,6 +79,7 @@ Item
 		text: section
 		font.pixelSize: Global.normalSize
 		font.italic: true
+		font.family: Global.fontFamily
 		color: "white"
 		height: Global.bigSize
 		verticalAlignment: Text.AlignBottom
@@ -198,6 +199,7 @@ Item
 	    }
 	    delegate: Text {
 		font.pixelSize: ListView.isCurrentItem ? Global.bigSize : Global.normalSize
+		font.family: Global.fontFamily
 		color: Global.textColor
 		text: name
 		MouseArea {
@@ -247,6 +249,7 @@ Item
 			  slider.value * song.duration / 1000)) + "/" + sec2min(
 		  Math.round(song.duration / 1000))
 	font.pixelSize: Global.normalSize
+	font.family: Global.fontFamily
 	color: Global.textColor
 	function sec2min(sec) {
 	    var ret = ""
