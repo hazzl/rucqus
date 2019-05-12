@@ -59,6 +59,7 @@ Item {
 	    delegate: Text {
 		property string delText: text
 		font.pixelSize: Global.bigSize
+        font.family: Global.fontFamily
 		color: Global.textColor
 		text: name
 		MouseArea {

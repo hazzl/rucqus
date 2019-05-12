@@ -32,6 +32,7 @@ ListView {
             text: name
             color: Global.textColor
             font.pixelSize: Global.bigSize
+            font.family: Global.fontFamily
             height: Global.bigSize+4
             MouseArea {
                 anchors.fill: parent
