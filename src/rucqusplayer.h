@@ -22,8 +22,8 @@ private:
 	QMediaPlaylist	*p_plist;
 	int			getUid(int index);
 	int			lastSong;
-	void		recordLastplayed(const int uid);
-	void		recordTimesplayed(const int uid);
+    void		recordLastplayed(const int uid);
+    void		recordTimesplayed(const int uid);
 private slots:
 	void		onMediaChanged();
 	void		onStateChanged(const QMediaPlayer::State state);

@@ -25,7 +25,7 @@ RucqusApp::RucqusApp(int & argc, char ** argv)
 		qCritical(err.driverText().toUtf8());
 		qFatal(err.databaseText().toUtf8());
 	}
-	QQmlApplicationEngine *engine = new QQmlApplicationEngine(this);
+    auto *engine = new QQmlApplicationEngine(this);
 	QQmlContext *context = engine->rootContext();
 	p_conf = new ConfigHandler(this);
 	if (p_conf->isPointerHidden())
@@ -91,7 +91,7 @@ void RucqusApp::findViews()
 	} else if ( source == QUrl("qrc:/Radio.qml"))
 	{
 		p_playLView = nullptr;
-		const QQuickItem *stationLView = p_loaderPage->findChild<const QQuickItem*>("stationListV");
+        const auto *stationLView = p_loaderPage->findChild<const QQuickItem*>("stationListV");
 		connect(stationLView, SIGNAL(clicked(int)), song, SLOT(setRadioStation(int)));
 		song->setRadioStation(0);
 	}

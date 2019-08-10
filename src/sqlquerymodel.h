@@ -12,11 +12,11 @@ class SqlQueryModel : public QSqlQueryModel
 	Q_OBJECT
 public:
     SqlQueryModel(QObject *parent);
-    ~SqlQueryModel();
+    ~SqlQueryModel() override;
     void setQuery(const QString &query, const QSqlDatabase &db = QSqlDatabase());
     void setQuery(const QSqlQuery &query);
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const { return m_roleNames; }
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override { return m_roleNames; }
 
 public slots:
     virtual void refresh() {}

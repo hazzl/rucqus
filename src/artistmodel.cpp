@@ -10,7 +10,7 @@ ArtistModel::ArtistModel(QObject *parent):
 
 void ArtistModel::refresh()
 {
-	const RucqusApp *app = static_cast<RucqusApp*>(parent());
+    const RucqusApp *app = dynamic_cast<RucqusApp*>(parent());
 	int genre = getCurrentIndex(app->genreList(), app->genreModel());
 
 	if (q->isActive()) q->finish();

@@ -17,7 +17,7 @@ class RucqusApp : public QGuiApplication
 	Q_OBJECT
 public:
 	RucqusApp(int & argc, char ** argv);
-	~RucqusApp();
+    ~RucqusApp() override;
 	const QSqlDatabase *db() const {return &p_db;}
 	const GenreModel *genreModel() const {return p_genreModel;}
 	const QQuickItem *genreList() const {return p_genreLView;}

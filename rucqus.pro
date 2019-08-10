@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick network multimedia sql
+QT += qml quick quickcontrols2 network multimedia sql
 CONFIG += c++11
 
 SOURCES += src/main.cpp \

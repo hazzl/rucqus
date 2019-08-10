@@ -11,7 +11,7 @@ AlbumModel::AlbumModel(QObject *parent):
 
 void AlbumModel::refresh()
 {
-	const RucqusApp *app = static_cast<RucqusApp*>(parent());
+    const RucqusApp *app = dynamic_cast<RucqusApp*>(parent());
 	int genre = getCurrentIndex(app->genreList(), app->genreModel());
 	int artist = getCurrentIndex(app->artistList(), app->artistModel());
 
