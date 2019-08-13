@@ -28,6 +28,8 @@ signals:
 	void hidePointerChanged();
 private:
 	QHash <QString, QVariant>p_config;
+private slots:
+    void writeBack(const QString &key, const QVariant &value);
 };
 
 #endif // CONFIGHANDLER_H

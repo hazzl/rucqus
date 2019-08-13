@@ -30,6 +30,7 @@ public:
 	const QQuickItem *playListV() const {return p_playLView;}
 	const RucqusPlayer *player() const {return song;}
 	const ConfigHandler *conf() const {return p_conf;}
+    void initDB();
 private slots:
 	void setupLoader(QObject *object);
 	void initTimer();

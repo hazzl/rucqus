@@ -20,11 +20,12 @@ RucqusApp::RucqusApp(int & argc, char ** argv)
 	p_db = QSqlDatabase::addDatabase("QSQLITE");
 	p_db.setDatabaseName("rucqus.sqlite");
 	if (!p_db.open())
-	{
-		QSqlError err = p_db.lastError();
-		qCritical(err.driverText().toUtf8());
-		qFatal(err.databaseText().toUtf8());
-	}
+    {
+        QSqlError err = p_db.lastError();
+        qCritical(err.driverText().toUtf8());
+        qFatal(err.databaseText().toUtf8());
+    }
+
     auto *engine = new QQmlApplicationEngine(this);
 	QQmlContext *context = engine->rootContext();
 	p_conf = new ConfigHandler(this);
@@ -100,4 +101,59 @@ void RucqusApp::findViews()
 RucqusApp::~RucqusApp()
 {
 	p_db.close();
+}
+
+void RucqusApp::initDB()
+{
+    QSqlQuery q;
+    q.exec("BEGIN EXCLUSIVE TRANSACTION");
+    q.exec("CREATE TABLE IF NOT EXISTS config ("
+           "key TEXT PRIMARY KEY ON CONFLICT REPLACE,"
+           "value TEXT"
+           ") WITHOUT ROWID");
+    q.exec("CREATE TABLE IF NOT EXISTS songs ("
+           "id	INTEGER PRIMARY KEY,"
+           "album	INTEGER REFERENCES albums(id),"
+           "trackno	INTEGER,"
+           "name	TEXT,"
+           "path	TEXT UNIQUE ON CONFLICT REPLACE,"
+           "rating	INTEGER,"
+           "timesplayed INTEGER,"
+           "timesskipped INTEGER,"
+           "lastplayed DATETIME,"
+           "filectime DATETIME"
+           ")");
+    q.exec("CREATE UNIQUE INDEX IF NOT EXISTS pathidx ON songs (path)");
+    q.exec("CREATE TABLE IF NOT EXISTS albums ("
+           "id	INTEGER PRIMARY KEY,"
+           "category INTEGER REFERENCES categories(id),"
+           "name	TEXT,"
+           "trackcount INTEGER,"
+           "datetime DATE,"
+           "lastplayed DATETIME"
+           ")");
+    q.exec("CREATE INDEX IF NOT EXISTS albumidx ON albums (name)");
+    q.exec("CREATE TABLE IF NOT EXISTS artists ("
+           "id	INTEGER PRIMARY KEY,"
+           "name	TEXT"
+           ")");
+    q.exec("CREATE INDEX IF NOT EXISTS artistidx ON artists (name)");
+    q.exec("CREATE TABLE IF NOT EXISTS song_artists ("
+           "song_id	INTEGER REFERENCES songs(id),"
+           "artist_id INTEGER REFERENCES artists(id),"
+           "artist_type  INTEGER"
+           ")");
+    q.exec("CREATE TABLE IF NOT EXISTS genres ("
+           "id	INTEGER PRIMARY KEY,"
+           "name	TEXT"
+           ")");
+    q.exec("CREATE TABLE IF NOT EXISTS song_genres ("
+           "song_id	INTEGER REFERENCES songs(id),"
+           "genre_id INTEGER REFERENCES genres(id)"
+           ")");
+    q.exec("CREATE TABLE IF NOT EXISTS categories ("
+           "id	INTEGER PRIMARY KEY,"
+           "name	TEXT"
+           ")");
+    q.exec("COMMIT TRANSACTION");
 }
