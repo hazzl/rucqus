@@ -46,10 +46,14 @@ void RucqusPlayer::replacePList()
 void RucqusPlayer::setRadioStation(int id)
 {
 	const RadioModel *model = dynamic_cast<const RucqusApp*>(parent())->radioModel();
-	const QModelIndex i = model->index(id, 0);
-	const QUrl url(model->data(i, Qt::UserRole+2).toString());
+    const QUrl url(model->data(model->index(id, 0), Qt::UserRole+2).toString());
+    const QString filename = url.fileName().toLower();
+
 	p_plist->clear();
-	p_plist->load(url);
+    if (filename.endsWith(".m3u") || filename.endsWith(".pls") || filename.endsWith(".m3u8"))
+        p_plist->load(url);
+    else
+        p_plist->addMedia(QMediaContent(url));
 }
 
 QUrl RucqusPlayer::source()
