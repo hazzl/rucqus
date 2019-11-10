@@ -17,5 +17,8 @@
         <file>icons/Prefs.png</file>
         <file>icons/Radio.png</file>
         <file>Radio.qml</file>
+        <file>icons/check.png</file>
+        <file>icons/error.png</file>
+        <file>icons/scanning.gif</file>
     </qresource>
 </RCC>
