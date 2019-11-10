@@ -50,6 +50,16 @@ void ConfigHandler::hidePointer(bool newState)
 	}
 }
 
+void ConfigHandler::setLibraryPath(const QString &path)
+{
+    const QString old=libraryPath();
+    if (path != old)
+    {
+        set("libraryPath", QVariant(path));
+        emit libraryPathChanged(path);
+    }
+}
+
 void ConfigHandler::writeBack(const QString &key, const QVariant &value)
 {
     QSqlQuery q;
