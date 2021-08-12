@@ -56,9 +56,9 @@ void RucqusPlayer::setRadioStation(int id)
         p_plist->addMedia(QMediaContent(url));
 }
 
-QUrl RucqusPlayer::source()
+QUrl RucqusPlayer::source() const
 {
-	return currentMedia().canonicalUrl();
+    return currentMedia().request().url();
 }
 
 void RucqusPlayer::onMediaChanged()
@@ -110,6 +110,7 @@ void RucqusPlayer::recordLastplayed(const int uid)
 		q.bindValue(":alb",album);
 		q.exec();
 	}
+	q.exec("PRAGMA wal_checkpoint(TRUNCATE);");
 }
 
 void RucqusPlayer::recordTimesplayed(const int uid)
